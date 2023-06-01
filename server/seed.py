@@ -22,6 +22,7 @@ with app.app_context():
         bakeries.append(b)
     
     db.session.add_all(bakeries)
+    db.session.commit()
 
     baked_goods = []
     names = []
@@ -32,10 +33,12 @@ with app.app_context():
             name = fake.first_name()
         names.append(name)
 
+        random_bakery = rc(bakeries)
+        # print(random_bakery.id)
         bg = BakedGood(
             name=name,
             price=randint(1,10),
-            bakery=rc(bakeries)
+            bakery_id=random_bakery.id
         )
 
         baked_goods.append(bg)
